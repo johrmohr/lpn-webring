@@ -1,4 +1,4 @@
-# CSSC Webring
+# SCCS Webring
 
 A webring for friends and collaborators. A webring links personal websites in a circular way, letting visitors discover new people by navigating through the ring.
 
