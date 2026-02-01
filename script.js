@@ -175,6 +175,47 @@ function initRingScroller() {
         }
     }, { passive: false });
 
+    // Touch event handling for mobile
+    let touchStartY = 0;
+    let touchActive = false;
+
+    window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+        touchActive = true;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (!touchActive) return;
+
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchY; // Positive = scrolling down
+        touchStartY = touchY;
+
+        const scrollingDown = deltaY > 0;
+        const scrollingUp = deltaY < 0;
+        const atStart = horizontalOffset <= initialOffset;
+        const atEnd = horizontalOffset >= maxHorizontalScroll;
+        const atBottom = isAtPageBottom();
+
+        // Same logic as wheel event
+        if ((atBottom && scrollingDown && !atEnd) ||
+            (horizontalOffset > initialOffset && scrollingUp) ||
+            (horizontalOffset > initialOffset && scrollingDown && !atEnd)) {
+
+            e.preventDefault();
+
+            horizontalOffset += deltaY * 1.5; // Multiply for better touch feel
+            horizontalOffset = Math.max(initialOffset, Math.min(maxHorizontalScroll, horizontalOffset));
+
+            ringTrack.style.transform = `translateX(${-horizontalOffset}px)`;
+            applyCurveEffect();
+        }
+    }, { passive: false });
+
+    window.addEventListener('touchend', () => {
+        touchActive = false;
+    }, { passive: true });
+
     // Redraw on resize
     window.addEventListener('resize', () => {
         setupScrollConversion();
