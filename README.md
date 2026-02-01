@@ -3,8 +3,7 @@
 </p>
 
 # LPN Webring
-
-A [webring](https://en.wikipedia.org/wiki/Webring) for students and alumni from Lambda Phi Nu at the University of California, Irvine. A webring links personal websites in a circular way, letting visitors discover new people by navigating through the ring.
+A [webring](https://en.wikipedia.org/wiki/Webring) for students and alumni from [Lambda Phi Nu](https://www.lpnuci.com/#/) at the University of California, Irvine. A webring links personal websites in a circular way, letting visitors discover new people by navigating through the ring.
 
 **[Visit the webring →](https://webring.lpnuci.com/)**
 
