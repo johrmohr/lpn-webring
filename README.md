@@ -11,7 +11,7 @@ A [webring](https://en.wikipedia.org/wiki/Webring) for students and alumni from 
 
 1. **Add the widget to your site** (see below)
 2. **Fork this repository**
-3. **Add your info** to the `siteData` array in `data.js`
+3. **Add your info** to the `siteData.sites` array in `data.js`
 4. **Submit a pull request**
 
 ## Widget Template

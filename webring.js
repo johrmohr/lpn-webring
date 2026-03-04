@@ -23,28 +23,65 @@ function webringMatch(searchUrl, targetUrl) {
 }
 
 /**
- * Main navigation function - handles redirecting to prev/next site
- * Called when URL contains #site-url?nav=prev or #site-url?nav=next
+ * Validates the direction requested by the widget
  */
-function navigateWebring() {
+function isValidDirection(direction) {
+    return direction === 'next' || direction === 'prev';
+}
+
+/**
+ * Reads navigation requests from the current URL.
+ * Supports both ?nav=prev&from=site.com and the legacy #site.com?nav=prev format.
+ */
+function getNavigationRequest() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryDirection = searchParams.get('nav');
+    const querySiteUrl = searchParams.get('from');
+
+    if (querySiteUrl && isValidDirection(queryDirection)) {
+        return {
+            direction: queryDirection,
+            siteUrl: querySiteUrl
+        };
+    }
+
     const hash = window.location.hash;
 
-    // Check if this is a navigation request
     if (!hash || !hash.includes('?nav=')) {
+        return null;
+    }
+
+    const [siteUrl, direction] = hash.substring(1).split('?nav=');
+
+    if (!siteUrl || !isValidDirection(direction)) {
+        return null;
+    }
+
+    return {
+        direction,
+        siteUrl: decodeURIComponent(siteUrl)
+    };
+}
+
+/**
+ * Main navigation function - handles redirecting to prev/next site
+ * Called when URL contains ?nav=prev&from=site-url or #site-url?nav=prev
+ */
+function navigateWebring() {
+    const request = getNavigationRequest();
+
+    if (!request) {
         return false;
     }
 
-    // Parse the hash: #site-url?nav=direction
-    const [siteUrl, params] = hash.substring(1).split('?nav=');
-    const direction = params;
+    const { direction, siteUrl } = request;
+    const sites = siteData.sites;
 
-    // Validate direction
-    if (direction !== 'next' && direction !== 'prev') {
+    if (!sites.length) {
         return false;
     }
 
     // Find current site index
-    const sites = siteData.sites;
     let currentIndex = -1;
 
     for (let i = 0; i < sites.length; i++) {
@@ -95,5 +132,5 @@ function navigateWebring() {
 
 // Export for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { formatUrl, webringMatch, navigateWebring };
+    module.exports = { formatUrl, webringMatch, isValidDirection, getNavigationRequest, navigateWebring };
 }
