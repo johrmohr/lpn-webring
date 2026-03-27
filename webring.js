@@ -114,8 +114,8 @@ function navigateWebring() {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #1a1a1a;
-            color: #888;
+            background: #0b111e;
+            color: #7588a3;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         ">
             redirecting to ${formatUrl(targetSite)}...

@@ -7,6 +7,11 @@ const siteData = {
             name: "Jordan Moreno",
             year: "2026",
             website: "https://jordanmoreno.me/"
+        },
+        {
+            name: "Chris Yeh",
+            year: "2026",
+            website: "https://chrisyeh.dev"
         }
     ]
 };
